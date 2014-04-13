@@ -1,0 +1,47 @@
+{% extends 'tracker/base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.css">
+{% endblock %}
+
+{% block title %}
+Tracker Application List
+{% endblock %}
+
+{% block content %}
+
+<h1>Tracker Application List</h1>
+
+
+<h5 class='text-right'>You have submitted <span class="label label-default">{{ past_apps }}</span> applications in the past 30 days.</h5>
+
+<table class='table'>
+<tr>
+<th class='col-md-2'>Job Title</th>
+<th class='col-md-6'>Job Description</th>
+<th class='col-md-2'>Company</th>
+<th class='col-md-1'>Date Applied</th>
+{% if user.is_authenticated %}<th class='col-md-1'></th> {% endif %}
+</tr>
+{% for application in applications %}
+<tr>
+<td class='col-md-2'>{{ application.title }}</td>
+<td class='col-md-6'>{{ application.description }}</td>
+<td class='col-md-2'>{{ application.company }}</td>
+<td class='col-md-1'>{{ application.submitted_date }}</td>
+<td class='col-md-1'>
+	<form action="/tracker/delete/{{ application.id }}/" id="delete_form" role="form" method="POST">
+		{% csrf_token %}
+		<button type="submit" name="delete" class="btn btn-link"><span class="glyphicon glyphicon-remove"></span></button>
+		<a href="/tracker/edit/{{ application.id }}/"><span class="glyphicon glyphicon-pencil"></span></a>
+	</form>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<div class="container">
+<a href="/tracker/addapp/" role="button" class="btn btn-primary btn-lg active btn-block">Add an Application</a>
+</div>
+
+{% endblock %}

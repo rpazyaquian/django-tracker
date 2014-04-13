@@ -1,0 +1,22 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}
+Tracker Index Page
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+{% if user.is_authenticated %}
+	<h1>Welcome, {{ user.username }}.</h1>
+{% else %}
+	<h1>Welcome.</h1>
+{% endif %}
+	<p>This service allows you to track job applications you have submitted.</p>
+{% if user.is_authenticated %}
+	<a href="/tracker/user/{{ user.username }}/" role="button" class="btn btn-primary btn-lg active btn-block">Go look at your applications!</a>
+{% else %}
+	<a href="/tracker/register/" role="button" class="btn btn-primary btn-lg active btn-block">Sign up to track your applications!</a>
+{% endif %}
+</div>
+{% endblock %}

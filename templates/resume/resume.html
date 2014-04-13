@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{{header.name}}</title>
+</head>
+<body>
+
+	<h1>{{header.name}}</h1>
+
+	<p>{{header.address}}</p>
+	<p>{{header.phone_number}}</p>
+	<p>{{header.email}}</p>
+	<a href="{{header.github}}">Github</a>
+
+	{% for section in sections %}
+		<h2>{{section.title}}</h2>
+		{% for entry in section.entries.all %}
+			<h3>{{entry.title}}</h3>
+			<h4>{{entry.subtitle}}</h4>
+			<ul>
+			{% for detail in entry.details.all %}
+				<li>{{detail.content}}</li>
+			{% endfor %}
+			</ul>
+		{% endfor %}
+	{% endfor %}
+
+</body>
+</html>
