@@ -1,3 +1,11 @@
 venv
 *.pyc
 staticfiles
+
+*.iml
+
+*.xml
+
+*.DS_Store
+
+*.sqlite3
