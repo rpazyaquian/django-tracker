@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman</title>
+</head>
+<body>
+
+<div id='game-display'>
+	<ul id="blanks">	
+		{% for char in game.current_guess %}
+			<li>{{char}}</li>
+		{% endfor %}
+	</ul>
+
+	<ul id="guesses">
+		{% for char in game.guessed_letters %}
+			<li>{{char}}</li>
+		{% endfor %}
+	</ul>
+
+	<div id='message'>
+		{% if message %}
+		{{message}}
+		{% endif %}
+	</div>
+
+{% if game.win_lose_state == None %}
+<form action="/hangman/" method='post'>
+	<input name='letter' maxlength=1 type="text">
+	<input type="submit" value="Check letter">	
+</form>
+{% endif %}
+</div>
+
+</body>
+</html>

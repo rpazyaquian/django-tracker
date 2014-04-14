@@ -39,6 +39,9 @@ INSTALLED_APPS = (
     'tracker',
     'widget_tweaks',
     'resume',
+    'hangman',
+    'guestbook',
+    'south'
 )
 
 MIDDLEWARE_CLASSES = (

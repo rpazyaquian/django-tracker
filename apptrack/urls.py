@@ -10,5 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tracker/', include('tracker.urls')),
+    url(r'^hangman/', include('hangman.urls')),
     url(r'^$', include('resume.urls')),
+    url(r'^guestbook/', include('guestbook.urls')),
 )

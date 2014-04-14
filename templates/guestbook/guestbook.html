@@ -1,0 +1,39 @@
+{% extends 'guestbook/base.html' %}
+
+{% block title %}
+Guestbook
+{% endblock %}
+
+{% block content %}
+
+	<div id="comments">
+	<table>
+		{% for comment in comments %}
+		<tr>
+			<td>{{comment.name}}</td>
+			<td>{{comment.comment}}</td>
+			<td>{{comment.created_date}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+
+	<form action="/guestbook/" role="form" id="comment_form" method="post">
+		
+		{% csrf_token %}
+
+		{% for field in form %}
+
+			{{field}}
+
+			{% if field.errors %}
+			{{field.errors.as_text}}
+			{% endif %}
+
+		{% endfor %}
+
+	<button type="submit" name="submit">Post entry</button>
+
+	</form>
+
+{% endblock %}
