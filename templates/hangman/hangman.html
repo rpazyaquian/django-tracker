@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,51 +26,62 @@
 
 <div id='game-display' class='jumbotron'>
 
-	{% if user.is_authenticated %}
+	<div class='row'>
 
-	<ul id="blanks">	
-		{% for char in game.current_guess %}
-			<li>{{char}}</li>
-		{% endfor %}
-	</ul>
+		<div class='col-md-6'>
+			{% if user.is_authenticated %}
 
-	<ul id="guesses">
-		{% for char in game.guessed_letters %}
-			<li>{{char}}</li>
-		{% endfor %}
-	</ul>
+			<ul id="blanks">	
+				{% for char in game.current_guess %}
+					<li>{{char}}</li>
+				{% endfor %}
+			</ul>
 
-	<p>Hits: {{game.hits}}</p>
-	<p>Misses: {{game.misses}}</p>
+			<ul id="guesses">
+				{% for char in game.guessed_letters %}
+					<li>{{char}}</li>
+				{% endfor %}
+			</ul>
 
-	<p>{{ message }}</p>
+			<p>Hits: {{game.hits}}</p>
+			<p>Misses: {{game.misses}}</p>
 
+			<p>{{ message }}</p>
 
-{% if game.win_lose_state == None %}
-<form action="/hangman/" method='post'>
+		</div>
 
-	{% csrf_token %}
-	<input name='letter' maxlength=1 type="text">
-	<input type="submit" value="Check letter">
-</form>
+		<div class='col-md-6'>
 
-{% else %}
+			<img src="{% static '' %}hangman/img/hangman{{game.misses}}.png" alt="Hangman pieces created: {{game.misses}}">
 
-<a href='/hangman/' class='btn btn-default btn-lg active'>Again?</a>
+		</div>
 
-{% endif %}
+	</div>
 
-{% else %}
+	{% if game.win_lose_state == None %}
+	<form action="/hangman/" method='post'>
 
-<h2>Sorry! You must be logged in to play.</h2>
+		{% csrf_token %}
+		<input name='letter' maxlength=1 type="text">
+		<input type="submit" value="Check letter">
+	</form>
 
-<a href="/hangman/login" class='btn btn-default btn-lg active'>Login</a>
-<a href="/hangman/register" class='btn btn-default btn-lg active'>Register</a>
-{% endif %}
+	{% else %}
 
-</div>
+	<a href='/hangman/' class='btn btn-default btn-lg active'>Again?</a>
 
-{% endblock %}
+	{% endif %}
+
+	{% else %}
+
+	<h2>Sorry! You must be logged in to play.</h2>
+
+	<a href="/hangman/login" class='btn btn-default btn-lg active'>Login</a>
+	<a href="/hangman/register" class='btn btn-default btn-lg active'>Register</a>
+	{% endif %}
+
+	{% endblock %}
+
 </div>
 
 {% block scripts %}
