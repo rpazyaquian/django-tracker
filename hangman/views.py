@@ -1,55 +1,95 @@
 from django.shortcuts import render
 from models import Game
+import requests
 
 # Create your views here.
 
 
 def hangman(request):
 
+    data = {}
+
     if request.method == 'POST':
 
         game = Game.objects.filter(user=request.user).latest('id')
 
+        letter = request.POST['letter']
 
+        if not letter.isalpha():
 
-        if request['letter'] in game.guessed_letters:
+            data['game'] = game
 
-            data = {'game': game, 'message': 'You already guessed that letter!'}
+            data['message'] = 'Please enter a valid letter.'
+
+            return render(request, 'hangman/hangman.html', data)
+
+        elif letter in game.guessed_letters:
+
+            data['game'] = game
+
+            data['message'] = 'You already guessed that letter!'
 
             return render(request, 'hangman/hangman.html', data)
 
         else:
 
-            if request['letter'] in game.word:
+            if letter in game.word:
 
                 game.hits += 1
+                game.guessed_letters += letter
 
-                for i in range(len(game.word)):
+                current_guess = ''
 
-                    if request['letter'] == game.word[i]:
+                for i in game.word:
 
-                        game.current_guess[i] = request['letter']
+                    if i in game.guessed_letters:
 
-                game.guessed_letters += request['letter']
+                        current_guess += i
+
+                    else:
+
+                        current_guess += '_'
+
+                game.current_guess = current_guess
 
                 if game.current_guess == game.word:
 
                     game.win_lose_state = True
 
+                    data['message'] = 'You win!'
+
+                game.save()
+
+                data['game'] = game
+
+                return render(request, 'hangman/hangman.html', data)
+
             else:
 
                 game.misses +=1
 
-                game.guessed_letters += request['letter']
+                game.guessed_letters += letter
 
                 if game.misses >= 10:
 
+                    game.current_guess = game.word
+
                     game.win_lose_state = False
+
+                    data['message'] = 'You lose!'
+
+                game.save()
+
+                data['game'] = game
+
+                return render(request, 'hangman/hangman.html', data)
 
 
     else:
 
-        word = 'apple'
+        r = requests.get('http://randomword.setgetgo.com/get.php')
+
+        word = r.text.strip()
 
         current_guess = '_'*len(word)
 
@@ -66,6 +106,6 @@ def hangman(request):
 
         data = {'game': game}
 
-    game.save()
+        game.save()
 
-    return render(request, 'hangman/hangman.html', data)
+        return render(request, 'hangman/hangman.html', data)

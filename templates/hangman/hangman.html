@@ -3,10 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hangman</title>
+
+	<link rel="stylesheet" href="http://bootswatch.com/cerulean/bootstrap.min.css" type="text/css">
+
+	<style>
+		ul li {display: inline-block;}
+	</style>
+
 </head>
 <body>
+<div class='container'>
 
-<div id='game-display'>
+<h1>Hangman!</h1>
+
+<div id='game-display' class='jumbotron'>
 	<ul id="blanks">	
 		{% for char in game.current_guess %}
 			<li>{{char}}</li>
@@ -19,19 +29,31 @@
 		{% endfor %}
 	</ul>
 
-	<div id='message'>
-		{% if message %}
-		{{message}}
-		{% endif %}
-	</div>
+	<p>Hits: {{game.hits}}</p>
+	<p>Misses: {{game.misses}}</p>
+
+	<p>{{ message }}</p>
+
 
 {% if game.win_lose_state == None %}
 <form action="/hangman/" method='post'>
+
+	{% csrf_token %}
 	<input name='letter' maxlength=1 type="text">
 	<input type="submit" value="Check letter">	
 </form>
+
+{% else %}
+
+<a href='/hangman/' class='btn btn-default btn-lg active'>Again?</a>
+
 {% endif %}
+
 </div>
+</div>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

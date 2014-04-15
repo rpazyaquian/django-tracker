@@ -24,7 +24,7 @@ Guestbook
 
 		{% for field in form %}
 
-			{{field}}
+			{{field.label}} {{field}}
 
 			{% if field.errors %}
 			{{field.errors.as_text}}
