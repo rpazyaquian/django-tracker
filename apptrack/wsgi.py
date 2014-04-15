@@ -16,9 +16,9 @@ application = get_wsgi_application()
 
 
 
-# Heroku config -- comment me out to work locally, uncomment to deploy on Heroku (is there a better solution?)
-
-from django.core.wsgi import get_wsgi_application
-from dj_static import Cling
-
-application = Cling(get_wsgi_application())
+## Heroku config -- comment me out to work locally, uncomment to deploy on Heroku (is there a better solution?)
+#
+#from django.core.wsgi import get_wsgi_application
+#from dj_static import Cling
+#
+#application = Cling(get_wsgi_application())

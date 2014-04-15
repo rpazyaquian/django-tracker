@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Hangman</title>
+	<title>{% block title %}Hangman{% endblock %}</title>
+
+	{% block styles %}
 
 	<link rel="stylesheet" href="http://bootswatch.com/cerulean/bootstrap.min.css" type="text/css">
 
@@ -10,13 +12,20 @@
 		ul li {display: inline-block;}
 	</style>
 
+	{% endblock %}
+
 </head>
 <body>
 <div class='container'>
 
+{% block content %}
+
 <h1>Hangman!</h1>
 
 <div id='game-display' class='jumbotron'>
+
+	{% if user.is_authenticated %}
+
 	<ul id="blanks">	
 		{% for char in game.current_guess %}
 			<li>{{char}}</li>
@@ -40,7 +49,7 @@
 
 	{% csrf_token %}
 	<input name='letter' maxlength=1 type="text">
-	<input type="submit" value="Check letter">	
+	<input type="submit" value="Check letter">
 </form>
 
 {% else %}
@@ -49,11 +58,23 @@
 
 {% endif %}
 
-</div>
+{% else %}
+
+<h2>Sorry! You must be logged in to play.</h2>
+
+<a href="/hangman/login" class='btn btn-default btn-lg active'>Login</a>
+<a href="/hangman/register" class='btn btn-default btn-lg active'>Register</a>
+{% endif %}
+
 </div>
 
+{% endblock %}
+</div>
+
+{% block scripts %}
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+{% endblock %}
 
 </body>
 </html>
