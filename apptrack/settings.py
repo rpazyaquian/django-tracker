@@ -127,7 +127,7 @@ DEBUG = False
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config(default='postgres://yarmtesvmgfytq:5qvtcCPmSCwv4VEVx2qqeRSMNM@ec2-54-83-14-68.compute-1.amazonaws.com:5432/d1t462v8ct5o5d')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
