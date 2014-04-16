@@ -28,6 +28,10 @@ def hangman(request):
 
             data['message'] = 'Please enter a valid letter.'
 
+            data['wins'] = Game.objects.filter(user=request.user).filter(win_lose_state=True).count()
+
+            data['losses'] = Game.objects.filter(user=request.user).filter(win_lose_state=False).count()
+
             return render(request, 'hangman/hangman.html', data)
 
         elif letter in game.guessed_letters:
@@ -35,6 +39,10 @@ def hangman(request):
             data['game'] = game
 
             data['message'] = 'You already guessed that letter!'
+
+            data['wins'] = Game.objects.filter(user=request.user).filter(win_lose_state=True).count()
+
+            data['losses'] = Game.objects.filter(user=request.user).filter(win_lose_state=False).count()
 
             return render(request, 'hangman/hangman.html', data)
 
@@ -69,6 +77,11 @@ def hangman(request):
 
                 data['game'] = game
 
+                data['wins'] = Game.objects.filter(user=request.user).filter(win_lose_state=True).count()
+
+                data['losses'] = Game.objects.filter(user=request.user).filter(win_lose_state=False).count()
+
+
                 return render(request, 'hangman/hangman.html', data)
 
             else:
@@ -89,6 +102,10 @@ def hangman(request):
 
                 data['game'] = game
 
+                data['wins'] = Game.objects.filter(user=request.user).filter(win_lose_state=True).count()
+
+                data['losses'] = Game.objects.filter(user=request.user).filter(win_lose_state=False).count()
+
                 return render(request, 'hangman/hangman.html', data)
 
 
@@ -96,7 +113,7 @@ def hangman(request):
 
         r = requests.get('http://randomword.setgetgo.com/get.php')
 
-        word = r.text.strip()
+        word = r.text.strip().lower()
 
         current_guess = '_'*len(word)
 
@@ -114,6 +131,10 @@ def hangman(request):
         data = {'game': game}
 
         game.save()
+
+        data['wins'] = Game.objects.filter(user=request.user).filter(win_lose_state=True).count()
+
+        data['losses'] = Game.objects.filter(user=request.user).filter(win_lose_state=False).count()
 
         return render(request, 'hangman/hangman.html', data)
 

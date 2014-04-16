@@ -118,3 +118,11 @@ ProgrammingError: relation "hangman_game" does not exist
 LINE 1: INSERT INTO "hangman_game" ("user_id", "word", "current_gues...
                     ^
 
+Not Found: /favicon.ico
+Internal Server Error: /hangman/
+Traceback (most recent call last):
+  File "/Users/rebecca/Desktop/NerdStuff/Python/django-apptrack/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 114, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/Users/rebecca/Desktop/NerdStuff/Python/django-apptrack/apptrack/hangman/views.py", line 114, in hangman
+    r = requests.get('http://randomword.setgetgo.com/get.php').lower()
+AttributeError: 'Response' object has no attribute 'lower'

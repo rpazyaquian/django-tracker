@@ -50,9 +50,16 @@
 
 		</div>
 
-		<div class='col-md-6'>
+		<div class='col-md-5'>
 
 			<img src="{% static '' %}hangman/img/hangman{{game.misses}}.png" alt="Hangman pieces created: {{game.misses}}">
+
+		</div>
+
+		<div class="col-md-1">
+			
+			<p>Games won: {{wins}}</p>
+			<p>Games lost: {{losses}}</p>
 
 		</div>
 
@@ -62,7 +69,10 @@
 	<form action="/hangman/" method='post'>
 
 		{% csrf_token %}
+
+		<div class="form-group">
 		<input name='letter' maxlength=1 type="text">
+		</div>
 		<input type="submit" value="Check letter">
 	</form>
 
