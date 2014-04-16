@@ -9,3 +9,5 @@ staticfiles
 *.DS_Store
 
 *.sqlite3
+
+.env
